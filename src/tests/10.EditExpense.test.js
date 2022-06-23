@@ -16,9 +16,10 @@ import {
   TOTAL_FIELD_TEST_ID,
 } from './helpers/constants';
 
-afterEach(() => jest.clearAllMocks());
 
 describe('10 - Crie um botão para editar uma despesa da tabela contendo as seguintes características:', () => {
+  afterEach(() => jest.clearAllMocks());
+  
   const initial = initialStateWithExpenses;
 
   test('O botão deve estar dentro do último item da linha da tabela e deve possuir `data-testid="edit-btn"`', () => {
@@ -26,7 +27,7 @@ describe('10 - Crie um botão para editar uma despesa da tabela contendo as segu
     const btnEdit = document.getElementsByTagName('tr')[1].lastChild.firstChild;
     expect(btnEdit).toBeInTheDocument();
     expect(btnEdit.dataset.testid).toBe(BTN_EDIT_TEST_ID);    
-});
+  });
 
   test('Ao ser clicado, o botão habilita um formulário para editar a linha da tabela. Ao clicar em "Editar despesa" ela é atualizada e atualiza a soma de despesas no header.', async () => {
     const { store } = renderWithRouterAndStore(<Wallet />, '/carteira', initial);

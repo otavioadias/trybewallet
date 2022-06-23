@@ -4,16 +4,21 @@ import { response as mockData, initialStateWithExpenses } from './mocks/mockData
 import Wallet from '../pages/Wallet';
 import { renderWithRouterAndStore } from './helpers/testConfig';
 
-const apiResponse = Promise.resolve({
-  json: () => Promise.resolve(mockData),
-  ok: true,
-});
+const mockFetch = () => {
+  jest.spyOn(global, 'fetch')
+    .mockImplementation(() => Promise.resolve({
+      status: 200,
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    }));
+};
 
-jest.spyOn(global, 'fetch').mockImplementation(() => apiResponse);
-
-afterEach(() => jest.clearAllMocks());
 
 describe('8 - Implemente a lógica para que a tabela seja alimentada pelo estado da aplicação', () => {
+  
+  beforeEach(mockFetch);
+  afterEach(() => jest.clearAllMocks());
+  
   const initial = initialStateWithExpenses;
   test('A tabela deve ser alimentada pelo estado da aplicação, que estará disponível na chave expenses que vem do reducer wallet.', () => {
     renderWithRouterAndStore(<Wallet />, '/carteira', initial);

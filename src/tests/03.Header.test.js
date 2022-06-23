@@ -6,16 +6,19 @@ import { renderWithRouterAndStore } from './helpers/testConfig';
 
 import { TOTAL_FIELD_TEST_ID } from './helpers/constants';
 
-const apiResponse = Promise.resolve({
-  json: () => Promise.resolve(mockData),
-  ok: true,
-});
-
-jest.spyOn(global, 'fetch').mockImplementation(() => apiResponse);
-
-afterEach(() => jest.clearAllMocks());
+const mockFetch = () => {
+  jest.spyOn(global, 'fetch')
+    .mockImplementation(() => Promise.resolve({
+      status: 200,
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    }));
+};
 
 describe('3 - Crie um header para a página de carteira contendo as seguintes características:', () => {
+  beforeEach(mockFetch);
+  afterEach(() => jest.clearAllMocks());
+  
   const initial = initialStateHeader;
 
   test('Um elemento que exiba o email do usuário que fez login.', () => {

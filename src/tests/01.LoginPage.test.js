@@ -17,9 +17,11 @@ import {
   INVALID_PASSWORD,
 } from './helpers/constants';
 
-afterEach(() => jest.clearAllMocks());
 
 describe('1 - Crie uma página inicial de login com os seguintes campos e características:', () => {
+  
+  afterEach(() => jest.clearAllMocks());
+  
   test('A rota para esta página deve ser \'/\'', () => {
     const { history } = renderWithRouterAndStore(<App />);
     expect(history.location.pathname).toBe('/');

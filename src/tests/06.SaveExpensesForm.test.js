@@ -13,16 +13,20 @@ import {
   TOTAL_FIELD_TEST_ID,
 } from './helpers/constants';
 
-const apiResponse = Promise.resolve({
-  json: () => Promise.resolve(mockData),
-  ok: true,
-});
 
-const mockedExchange = jest.spyOn(global, 'fetch').mockImplementation(() => apiResponse);
+const mockFetch = () => {
+  jest.spyOn(global, 'fetch')
+    .mockImplementation(() => Promise.resolve({
+      status: 200,
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    }));
+};
 
-afterEach(() => jest.clearAllMocks());
 
 describe('6 - Salve todas as informações do formulário no estado global', () => {
+  beforeEach(mockFetch)
+  afterEach(() => jest.clearAllMocks());
   test('Um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header', async () => {
     const { store } = renderWithRouterAndStore(<Wallet />, '/carteira');
 
@@ -44,7 +48,7 @@ describe('6 - Salve todas as informações do formulário no estado global', () 
     userEvent.selectOptions(tagInput, 'Lazer');
     userEvent.type(descriptionInput, 'Dez dólares');
     userEvent.click(addButton);
-    expect(mockedExchange).toBeCalledTimes(2);
+    expect(global.fetch).toBeCalledTimes(2);
 
     const expectedStateExpense = [
       {
@@ -69,7 +73,7 @@ describe('6 - Salve todas as informações do formulário no estado global', () 
     userEvent.selectOptions(tagInput, 'Trabalho');
     userEvent.type(descriptionInput, 'Vinte euros');
     fireEvent.click(addButton);
-    expect(mockedExchange).toBeCalledTimes(3);
+    expect(global.fetch).toBeCalledTimes(3);
 
     const expectedStateExpense2 = [
       {

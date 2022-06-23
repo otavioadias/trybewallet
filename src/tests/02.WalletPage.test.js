@@ -7,16 +7,20 @@ import { renderWithRouterAndStore } from './helpers/testConfig';
 
 import { EMAIL_INPUT_TEST_ID } from './helpers/constants';
 
-const apiResponse = Promise.resolve({
-  json: () => Promise.resolve(mockData),
-  ok: true,
-});
+const mockFetch = () => {
+  jest.spyOn(global, 'fetch')
+    .mockImplementation(() => Promise.resolve({
+      status: 200,
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    }));
+};
 
-jest.spyOn(global, 'fetch').mockImplementation(() => apiResponse);
-
-afterEach(() => jest.clearAllMocks());
 
 describe('2 - Crie uma página para sua carteira com as seguintes características:', () => {
+  beforeEach(mockFetch);
+  afterEach(() => jest.clearAllMocks());
+
   test('A rota para esta página deve ser \'/carteira\'', () => {
     const { history } = renderWithRouterAndStore(<App />);
     history.push('/carteira');

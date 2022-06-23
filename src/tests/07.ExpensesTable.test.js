@@ -4,16 +4,22 @@ import { response as mockData, initialStateWithExpenses } from './mocks/mockData
 import Wallet from '../pages/Wallet';
 import { renderWithRouterAndStore } from './helpers/testConfig';
 
-const apiResponse = Promise.resolve({
-  json: () => Promise.resolve(mockData),
-  ok: true,
-});
 
-jest.spyOn(global, 'fetch').mockImplementation(() => apiResponse);
+const mockFetch = () => {
+  jest.spyOn(global, 'fetch')
+    .mockImplementation(() => Promise.resolve({
+      status: 200,
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    }));
+};
 
-afterEach(() => jest.clearAllMocks());
 
 describe('7 - Desenvolva uma tabela com os gastos contendo as seguintes características:', () => {
+  
+  beforeEach(mockFetch);
+  afterEach(() => jest.clearAllMocks());
+  
   const initial = initialStateWithExpenses;
 
   test('A tabela deve possuir um cabeçalho com os campos Descrição, Tag, Método de pagamento, Valor, Moeda, Câmbio utilizado, Valor convertido e Moeda de conversão', () => {

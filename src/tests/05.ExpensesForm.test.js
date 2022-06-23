@@ -11,16 +11,22 @@ import {
   DESCRIPTION_INPUT_TEST_ID
 } from './helpers/constants'; 
 
-const apiResponse = Promise.resolve({
-  json: () => Promise.resolve(mockData),
-  ok: true,
-});
 
-jest.spyOn(global, 'fetch').mockImplementation(() => apiResponse);
+const mockFetch = () => {
+  jest.spyOn(global, 'fetch')
+    .mockImplementation(() => Promise.resolve({
+      status: 200,
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    }));
+};
 
-afterEach(() => jest.clearAllMocks());
+
 
 describe('5 - Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:', () => {
+  beforeEach(mockFetch);
+  afterEach(() => jest.clearAllMocks());
+  
   test('Um campo para adicionar o valor da despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const valueInput = await screen.findByTestId(VALUE_INPUT_TEST_ID);

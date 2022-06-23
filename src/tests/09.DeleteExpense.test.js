@@ -6,16 +6,20 @@ import { renderWithRouterAndStore } from './helpers/testConfig';
 
 import { BTN_DELETE_TEST_ID, TOTAL_FIELD_TEST_ID } from './helpers/constants';
 
-const apiResponse = Promise.resolve({
-  json: () => Promise.resolve(mockData),
-  ok: true,
-});
-
-jest.spyOn(global, 'fetch').mockImplementation(() => apiResponse);
-
-afterEach(() => jest.clearAllMocks());
+const mockFetch = () => {
+  jest.spyOn(global, 'fetch')
+    .mockImplementation(() => Promise.resolve({
+      status: 200,
+      ok: true,
+      json: () => Promise.resolve(mockData),
+    }));
+};
 
 describe('9 - Crie um botão para deletar uma despesa da tabela contendo as seguintes características:', () => {
+  
+  beforeEach(mockFetch)
+  afterEach(() => jest.clearAllMocks());
+  
   const initial = initialStateWithExpenses;
 
   test('O botão deve estar dentro do último item da linha da tabela e deve possuir `data-testid="delete-btn"`', () => {
