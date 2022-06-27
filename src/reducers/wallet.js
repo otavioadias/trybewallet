@@ -4,7 +4,7 @@ const wallet = (state = { currencies: [] }, action) => {
   if (action.type === CURRENCIES) {
     return {
       ...state,
-      currencies: action.payload.currencies,
+      currencies: action.payload,
     };
   }
   return state;
