@@ -16,7 +16,14 @@ export const actionCurrencies = (currencies) => ({
 
 export const EXPENSES = 'EXPENSES';
 
-export const actionExpenses = (expenses) => ({
+const acExpenses = (expenses, api) => ({
   type: EXPENSES,
-  payload: expenses,
+  payload: {
+    ...expenses,
+    exchangeRates: api,
+  },
 });
+
+export const actionExpenses = (expenses, api) => async (dispatch) => {
+  dispatch(acExpenses(expenses, api));
+};

@@ -12,8 +12,6 @@ class Wallet extends React.Component {
     currency: 'USD',
     method: 'Dinheiro',
     tag: 'Alimentação',
-    exchangeRates: '',
-    ask: 0,
   };
 
   async componentDidMount() {
@@ -24,13 +22,22 @@ class Wallet extends React.Component {
     addCurrencies(arrayCurrencies);
   }
 
-  onButtonClick = (event) => {
+  onButtonClick = async (event) => {
     event.preventDefault();
+    const response = await economy();
     const { addGlobalState } = this.props;
-    addGlobalState(this.state);
-    const { value } = this.state;
-    this.setState((prevState) => ({ ask: prevState.ask + parseInt(value, 10) }));
+    addGlobalState(this.state, response);
     this.setState({ value: '', description: '' });
+    this.setState((prevState) => ({ id: prevState.id + 1 }));
+  }
+
+  sum = () => {
+    const { expenses } = this.props;
+    const result = expenses.map((exp) => (
+      Math.trunc((exp.exchangeRates[exp.currency].ask) * Number(exp.value) * 100) / 100
+    ));
+    const total = result.reduce((a, b) => Number(a) + Number(b), 0);
+    return total;
   }
 
   onInputChange = (event) => {
@@ -38,14 +45,14 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies } = this.props;
-    const { ask, value, description } = this.state;
+    const { email, currencies, expenses } = this.props;
+    const { value, description } = this.state;
     return (
       <>
         <header>
           <p>TrybeWallet</p>
           <p data-testid="email-field">{ email }</p>
-          <p data-testid="total-field">{ ask }</p>
+          <p data-testid="total-field">{ this.sum() }</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <br />
@@ -76,31 +83,31 @@ class Wallet extends React.Component {
               }
             </select>
           </label>
-          <label htmlFor="payment">
+          <label htmlFor="method">
             Método de Pagamento:
             <select
               data-testid="method-input"
-              id="payment"
-              name="payment"
+              id="method"
+              name="method"
               onChange={ this.onInputChange }
             >
-              <option value="money">Dinheiro</option>
-              <option value="credit">Cartão de crédito</option>
-              <option value="debit">Cartão de débito</option>
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
             </select>
           </label>
-          <label htmlFor="category">
+          <label htmlFor="tag">
             Categoria:
             <select
               data-testid="tag-input"
-              id="category"
+              id="tag"
               onChange={ this.onInputChange }
             >
-              <option value="food">Alimentação</option>
-              <option value="lounge">Lazer</option>
-              <option value="work">Trabalho</option>
-              <option value="transport">Transporte</option>
-              <option value="health">Saúde</option>
+              <option value="Alimentação">Alimentação</option>
+              <option value="Lazer">Lazer</option>
+              <option value="Trabalho">Trabalho</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Saúde">Saúde</option>
             </select>
           </label>
           <label htmlFor="description">
@@ -130,6 +137,21 @@ class Wallet extends React.Component {
               <th>Editar/Excluir</th>
             </tr>
           </thead>
+          <tbody>
+            {expenses.map(({ id, currency, method, tag, descript, val }) => (
+              <tr key={ id }>
+                <td>{descript}</td>
+                <td>{tag}</td>
+                <td>{method}</td>
+                <td>{val}</td>
+                <td>{currency}</td>
+                <td>
+                  <button type="button">Remover</button>
+                  <button type="button">Editar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </>
     );
@@ -143,13 +165,16 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addGlobalState: (expenses) => dispatch(actionExpenses(expenses)),
+  addGlobalState: (expenses, api) => dispatch(actionExpenses(expenses, api)),
   addCurrencies: (currencies) => dispatch(actionCurrencies(currencies)),
 });
 
 Wallet.propTypes = {
+  // value: PropTypes.number.isRequired,
+  // currency: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
+  expenses: PropTypes.arrayOf(Object).isRequired,
   addGlobalState: PropTypes.func.isRequired,
   addCurrencies: PropTypes.func.isRequired,
 };
