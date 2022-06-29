@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import economy from '../services/api';
 import { actionCurrencies, actionExpenses } from '../actions';
+import Table from './Table';
 
 class Wallet extends React.Component {
   state = {
@@ -45,7 +46,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies, expenses } = this.props;
+    const { email, currencies } = this.props;
     const { value, description } = this.state;
     return (
       <>
@@ -123,36 +124,7 @@ class Wallet extends React.Component {
           <button type="submit">Adicionar despesa</button>
         </form>
         <br />
-        <table>
-          <thead>
-            <tr>
-              <th>Descrição</th>
-              <th>Tag</th>
-              <th>Método de pagamento</th>
-              <th>Valor</th>
-              <th>Moeda</th>
-              <th>Câmbio utilizado</th>
-              <th>Valor convertido</th>
-              <th>Moeda de conversão</th>
-              <th>Editar/Excluir</th>
-            </tr>
-          </thead>
-          <tbody>
-            {expenses.map(({ id, currency, method, tag, descript, val }) => (
-              <tr key={ id }>
-                <td>{descript}</td>
-                <td>{tag}</td>
-                <td>{method}</td>
-                <td>{val}</td>
-                <td>{currency}</td>
-                <td>
-                  <button type="button">Remover</button>
-                  <button type="button">Editar</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Table />
       </>
     );
   }
