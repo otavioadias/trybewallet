@@ -27,3 +27,12 @@ const acExpenses = (expenses, api) => ({
 export const actionExpenses = (expenses, api) => async (dispatch) => {
   dispatch(acExpenses(expenses, api));
 };
+
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+
+export function actionDeleteExpense(id) {
+  return {
+    type: DELETE_EXPENSE,
+    payload: id,
+  };
+}
