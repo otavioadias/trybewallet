@@ -33,34 +33,40 @@ class Login extends React.Component {
   render() {
     const { email, password, disabled } = this.state;
     return (
-      <div>
-        <p>Login</p>
-        <form>
-          <input
-            type="email"
-            data-testid="email-input"
-            placeholder="E-mail"
-            value={ email }
-            id="email"
-            onChange={ this.onInputChange }
-            required
-          />
-          <input
-            type="password"
-            data-testid="password-input"
-            placeholder="Senha"
-            value={ password }
-            id="password"
-            onChange={ this.onInputChange }
-          />
-          <button
-            type="submit"
-            disabled={ disabled }
-            onClick={ this.onButtonClick }
-          >
-            Entrar
-          </button>
-        </form>
+      <div className="bodyForm">
+        <div className="contentForm">
+          <img className="logoWallet" src="https://cdn.discordapp.com/attachments/938669134890278937/991892247861809213/20220629_232431_0000.png" alt="Wallet" width="275px" />
+          <form className="loginForm">
+            <p id="login">Login</p>
+            <input
+              className="input"
+              type="email"
+              data-testid="email-input"
+              placeholder="E-mail"
+              value={ email }
+              id="email"
+              onChange={ this.onInputChange }
+              required
+            />
+            <input
+              className="input"
+              type="password"
+              data-testid="password-input"
+              placeholder="Senha"
+              value={ password }
+              id="password"
+              onChange={ this.onInputChange }
+            />
+            <button
+              className="btnLogin"
+              type="submit"
+              disabled={ disabled }
+              onClick={ this.onButtonClick }
+            >
+              Entrar
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

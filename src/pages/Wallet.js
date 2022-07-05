@@ -23,6 +23,17 @@ class Wallet extends React.Component {
     addCurrencies(arrayCurrencies);
   }
 
+  // shouldComponentUpdate(nextProps) {
+  //   const { editor, idToEdit } = nextProps;
+  //   console.log(idToEdit);
+  //   const { id } = this.state;
+  //   if (editor && id === idToEdit) {
+  //     this.setState(expenseToUpdate);
+  //     return true;
+  //   }
+  //   return true;
+  // }
+
   onButtonClick = async (event) => {
     event.preventDefault();
     const response = await economy();
@@ -50,17 +61,22 @@ class Wallet extends React.Component {
     const { value, description } = this.state;
     return (
       <>
-        <header>
-          <p>TrybeWallet</p>
-          <p data-testid="email-field">{ email }</p>
-          <p data-testid="total-field">{ this.sum() }</p>
-          <p data-testid="header-currency-field">BRL</p>
+        <header className="headerWallet">
+          <div className="headerTitle">
+            <img src="https://cdn.discordapp.com/attachments/938669134890278937/994003451044434030/20220705_191302_0001.png" alt="Logo Wallet" width="200px" />
+          </div>
+          <div className="headerInfo">
+            <p data-testid="email-field">{ email }</p>
+            <p data-testid="total-field">{`Total: R$ ${this.sum()}`}</p>
+            <p data-testid="header-currency-field">BRL</p>
+          </div>
         </header>
         <br />
-        <form onSubmit={ this.onButtonClick }>
+        <form className="formWallet" onSubmit={ this.onButtonClick }>
           <label htmlFor="value">
             Valor:
             <input
+              className="inputWallet"
               type="number"
               data-testid="value-input"
               id="value"
@@ -71,6 +87,7 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda:
             <select
+              className="inputWallet"
               id="currency"
               data-testid="currency-input"
               onChange={ this.onInputChange }
@@ -87,6 +104,7 @@ class Wallet extends React.Component {
           <label htmlFor="method">
             Método de Pagamento:
             <select
+              className="inputWallet"
               data-testid="method-input"
               id="method"
               name="method"
@@ -100,6 +118,7 @@ class Wallet extends React.Component {
           <label htmlFor="tag">
             Categoria:
             <select
+              className="inputWallet"
               data-testid="tag-input"
               id="tag"
               onChange={ this.onInputChange }
@@ -114,6 +133,7 @@ class Wallet extends React.Component {
           <label htmlFor="description">
             Descrição:
             <input
+              className="inputWallet"
               type="text"
               data-testid="description-input"
               id="description"
@@ -121,7 +141,12 @@ class Wallet extends React.Component {
               onChange={ this.onInputChange }
             />
           </label>
-          <button type="submit">Adicionar despesa</button>
+          <button
+            className="btnWallet"
+            type="submit"
+          >
+            Adicionar despesa
+          </button>
         </form>
         <br />
         <Table />
@@ -134,6 +159,9 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  // expenseToUpdate: state.wallet.expenses
+  //   .find(({ id }) => id === state.expenses.idToEdit),
+  // idToEdit: state.wallet.idToEdit,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -142,13 +170,17 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Wallet.propTypes = {
-  // value: PropTypes.number.isRequired,
-  // currency: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(Object).isRequired,
   expenses: PropTypes.arrayOf(Object).isRequired,
   addGlobalState: PropTypes.func.isRequired,
   addCurrencies: PropTypes.func.isRequired,
+  // editor: PropTypes.bool.isRequired,
+  // idToEdit: PropTypes.number.isRequired,
 };
+
+// Wallet.defaultProps = {
+//   expenseToUpdate: {},
+// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

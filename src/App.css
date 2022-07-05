@@ -1,41 +1,158 @@
-.App {
+.contentForm {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 40%;
+  height: 45%;
+  background-color: white;
+  border-radius: 10px;
+  -webkit-box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 19px 19px 23px 9px rgba(0,0,0,0); 
+  box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 19px 19px 23px 9px rgba(0,0,0,0);
+}
+
+.logoWallet {
+  padding-right: 50px;
+}
+
+#login {
+  font-family: 'Gentium Book Plus', serif;
+}
+
+.btnLogin {
+  border-radius: 3px;
+  cursor: pointer;
+  width: 40%;
+  margin-top: 10px;
+}
+
+.btnLogin:hover {
+  background-color: #55C28D;
+}
+
+.input {
+  border-radius: 3px;
+  padding: 3px;
+}
+
+.bodyForm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: #55C28D;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  margin-right: 80px;
+  align-items: center;
+  gap: 7px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-right: 20px;
+}
+
+.headerInfo {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.headerTitle {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
+.formWallet {
   display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
-  min-height: 100vh;
+  gap: 5px;
+  justify-content: space-evenly;
 }
 
-.App-link {
-  color: #61dafb;
+table.greenTable {
+  font-family: Georgia, serif;
+  /* border: 6px solid #1F4733; */
+  padding-right: 10px;
+  padding-left: 10px;
+  width: 100%;
+  text-align: center;
+}
+table.greenTable td, table.greenTable th {
+  border: 1px solid #24943A;
+  padding: 3px 2px;
+}
+table.greenTable tbody td {
+  font-size: 13px;
+  color: #000000;
+}
+table.greenTable thead {
+  background: #55C28D;
+  background: -moz-linear-gradient(top, #7fd1a9 0%, #66c898 66%, #55C28D 100%);
+  background: -webkit-linear-gradient(top, #7fd1a9 0%, #66c898 66%, #55C28D 100%);
+  background: linear-gradient(to bottom, #7fd1a9 0%, #66c898 66%, #55C28D 100%);
+  border-bottom: 0px solid #444444;
+}
+table.greenTable thead th {
+  font-size: 19px;
+  font-weight: bold;
+  color: #F0F0F0;
+  text-align: center;
+}
+table.greenTable thead th:first-child {
+  border-left: none;
 }
 
-@keyframes App-logo-spin {
+table.greenTable tfoot {
+  font-size: 13px;
+  font-weight: bold;
+  color: #F0F0F0;
+  background: #55C28D;
+  background: -moz-linear-gradient(top, #7fd1a9 0%, #66c898 66%, #55C28D 100%);
+  background: -webkit-linear-gradient(top, #7fd1a9 0%, #66c898 66%, #55C28D 100%);
+  background: linear-gradient(to bottom, #7fd1a9 0%, #66c898 66%, #55C28D 100%);
+  border-top: 1px solid #337555;
+}
+table.greenTable tfoot td {
+  font-size: 13px;
+}
+table.greenTable tfoot .links {
+  text-align: right;
+}
+table.greenTable tfoot .links a{
+  display: inline-block;
+  background: #FFFFFF;
+  color: #24943A;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
 
-  from {
-    transform: rotate(0deg);
-  }
+.inputWallet {
+  border-radius: 3px;
+  margin-left: 5px;
+}
 
-  to {
-    transform: rotate(360deg);
-  }
+.btnWallet {
+  border-radius: 3px;
+  padding: 2px;
+  padding-right: 6px;
+  padding-left: 6px;
+}
+
+.formWallet {
+  padding: 10px;
+  -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0); 
+  box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+.headerWallet {
+  border-bottom: 2px outset #55C28D;
 }

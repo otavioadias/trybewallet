@@ -36,3 +36,21 @@ export function actionDeleteExpense(id) {
     payload: id,
   };
 }
+
+export const UPDATE_EXPENSE = 'UPDATE_EXPENSE';
+
+export function actionUpdateExpense(id) {
+  return {
+    type: UPDATE_EXPENSE,
+    payload: id,
+  };
+}
+
+// export const UPDATE_EXPENSE_COMMIT = 'UPDATE_EXPENSE_COMMIT';
+
+// export function actionUpdateExpenseCommit(expense) {
+//   return {
+//     type: UPDATE_EXPENSE_COMMIT,
+//     payload: expense,
+//   };
+// }
